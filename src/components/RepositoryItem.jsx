@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
         height: 50,
         width: 50,
         borderRadius: 5,
-        border: 1,
     },
     infoHeader: {
         display: 'flex',
