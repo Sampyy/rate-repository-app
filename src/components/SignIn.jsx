@@ -1,8 +1,9 @@
-import { Button, View, StyleSheet,TouchableHighlight } from 'react-native';
+import { Button, View, StyleSheet, TouchableHighlight } from 'react-native';
 import Text from './Text';
 import FormikTextInput from './FormikTextInput';
 import { Formik } from 'formik';
 import theme from '../theme';
+import * as yup from 'yup';
 
 const initialValues = {
     username: '',
@@ -15,8 +16,7 @@ const styles = StyleSheet.create({
         backgroundColor: theme.colors.blueBackground,
         padding: 7,
         marginTop: 10,
-        borderRadius: 5
-
+        borderRadius: 5,
     },
     container: {
         margin: theme.margins.normal,
@@ -24,33 +24,44 @@ const styles = StyleSheet.create({
     },
     loginText: {
         color: theme.colors.darkBackgroundText,
-    }
-})
+    },
+});
+
+const signInSchema = yup.object({
+    username: yup.string().required('Username is required'),
+    password: yup.string().required('Password is required'),
+});
 
 const SignInForm = ({ onSubmit }) => {
     return (
         <View style={styles.container}>
-            <FormikTextInput name="Username" placeholder="Username" />
+            <FormikTextInput name="username" placeholder="Username" />
             <FormikTextInput
-                name="Password"
+                name="password"
                 placeholder="Password"
                 secureTextEntry={true}
             />
-            <TouchableHighlight style={styles.button} onPress={onSubmit}><Text style={styles.loginText}>Login</Text></TouchableHighlight>
+            <TouchableHighlight style={styles.button} onPress={onSubmit}>
+                <Text style={styles.loginText}>Login</Text>
+            </TouchableHighlight>
         </View>
     );
 };
 const SignIn = () => {
-    const onSubmit = ({Username, Password}) => {
-        console.log(Username, ", ", Password);
+    const onSubmit = ({ username, password }) => {
+        console.log(username, ', ', password);
     };
 
     return (
         <View>
             <Text color="primary" fontSize="header">
-                Log in: 
+                Log in:
             </Text>
-            <Formik initialValues={initialValues} onSubmit={onSubmit}>
+            <Formik
+                initialValues={initialValues}
+                onSubmit={onSubmit}
+                validationSchema={signInSchema}
+            >
                 {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
             </Formik>
         </View>

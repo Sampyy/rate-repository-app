@@ -6,8 +6,8 @@ import TextInput from './TextInput';
 import Text from './Text';
 
 const styles = StyleSheet.create({
-  errorText: {
-    marginTop: 5,
+    errorText: {
+        marginTop: 5,
     },
     textInput: {
         borderWidth: 1,
@@ -16,27 +16,35 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         borderColor: theme.colors.textPrimary,
         marginTop: 5,
-        marginBottom: 5
-    }
+        marginBottom: 5,
+    },
+    errorText: {
+        color: theme.colors.error,
+    },
+    error: {
+        borderColor: theme.colors.error,
+    },
 });
 
 const FormikTextInput = ({ name, ...props }) => {
-  const [field, meta, helpers] = useField(name);
-  const showError = meta.touched && meta.error;
+    const [field, meta, helpers] = useField(name);
+    const showError = meta.touched && meta.error;
 
-  return (
-    <>
-      <TextInput
-        onChangeText={value => helpers.setValue(value)}
-        onBlur={() => helpers.setTouched(true)}
-        value={field.value}
-              error={showError}
-          style={styles.textInput}
-        {...props}
-      />
-      {showError && <Text style={styles.errorText}>{meta.error}</Text>}
-    </>
-  );
+    return (
+        <>
+            <TextInput
+                onChangeText={(value) => helpers.setValue(value)}
+                onBlur={() => helpers.setTouched(true)}
+                value={field.value}
+                error={showError}
+                style={[styles.textInput, showError && styles.error]}
+                {...props}
+            />
+            {showError && (
+                <Text style={styles.errorText}>Error: {meta.error}</Text>
+            )}
+        </>
+    );
 };
 
 export default FormikTextInput;
