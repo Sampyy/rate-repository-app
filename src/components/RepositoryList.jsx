@@ -13,16 +13,17 @@ const styles = StyleSheet.create({
 });
 
 const RepositoryList = () => {
-    const { data, loading } = useRepositories();
+    const { repositories } = useRepositories();
 
     // Get the nodes from the edges array
-    const repositoryNodes = !loading && data.repositories
-        ? data.repositories.edges.map((edge) => edge.node)
+    const repositoryNodes = repositories
+        ? repositories.edges.map((edge) => edge.node)
         : [];
 
     const ItemSeparator = () => <View style={styles.separator} />;
-
+    console.log('rendering repositorylist', repositories)
     return (
+        
         <FlatList
             data={repositoryNodes}
             ItemSeparatorComponent={ItemSeparator}
