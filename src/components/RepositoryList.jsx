@@ -13,11 +13,11 @@ const styles = StyleSheet.create({
 });
 
 const RepositoryList = () => {
-    const { repositories } = useRepositories()
+    const { data, loading } = useRepositories();
 
     // Get the nodes from the edges array
-    const repositoryNodes = repositories
-        ? repositories.edges.map((edge) => edge.node)
+    const repositoryNodes = !loading && data.repositories
+        ? data.repositories.edges.map((edge) => edge.node)
         : [];
 
     const ItemSeparator = () => <View style={styles.separator} />;
