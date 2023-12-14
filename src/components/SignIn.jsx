@@ -1,5 +1,5 @@
 import { Button, View, StyleSheet, TouchableHighlight } from 'react-native';
-import { redirect, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-native';
 import Text from './Text';
 import FormikTextInput from './FormikTextInput';
 import { Formik } from 'formik';
@@ -54,11 +54,12 @@ const SignInForm = ({ onSubmit }) => {
 
 const SignIn = () => {
     const [signIn] = useSignIn();
-
+    const navigate = useNavigate();
     const onSubmit = async ({ username, password }) => {
         console.log(username, ', ', password);
         try {
             const data = await signIn(username, password);
+            navigate('/');
             //console.log(data);
         } catch (e) {
             console.log('error occured: ' + e);
