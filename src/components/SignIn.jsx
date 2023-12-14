@@ -1,9 +1,13 @@
 import { Button, View, StyleSheet, TouchableHighlight } from 'react-native';
+import { redirect, useNavigate } from 'react-router-dom';
 import Text from './Text';
 import FormikTextInput from './FormikTextInput';
 import { Formik } from 'formik';
 import theme from '../theme';
 import * as yup from 'yup';
+
+import useSignIn from '../hooks/useSignIn';
+import { useEffect } from 'react';
 
 const initialValues = {
     username: '',
@@ -47,9 +51,18 @@ const SignInForm = ({ onSubmit }) => {
         </View>
     );
 };
+
 const SignIn = () => {
-    const onSubmit = ({ username, password }) => {
+    const [signIn] = useSignIn();
+
+    const onSubmit = async ({ username, password }) => {
         console.log(username, ', ', password);
+        try {
+            const data = await signIn(username, password);
+            //console.log(data);
+        } catch (e) {
+            console.log('error occured: ' + e);
+        }
     };
 
     return (

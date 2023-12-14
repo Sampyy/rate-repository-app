@@ -1,5 +1,4 @@
 import { FlatList, View, StyleSheet } from 'react-native';
-import { useState, useEffect } from 'react';
 import useRepositories from '../hooks/useRepositories';
 import RepositoryItem from './RepositoryItem';
 
@@ -21,7 +20,7 @@ const RepositoryList = () => {
         : [];
 
     const ItemSeparator = () => <View style={styles.separator} />;
-    console.log('rendering repositorylist', repositories)
+    //console.log('rendering repositorylist', repositories)
     return (
         
         <FlatList
