@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-native';
 import AppBar from './AppBar';
 import RepositoryList from './RepositoryList';
 import SignIn from './SignIn';
+import RepositoryView from './RepositoryView';
 
 const styles = StyleSheet.create({
     container: {
@@ -15,17 +16,16 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
-    
     return (
-        
         <View style={styles.container}>
             <AppBar />
             <Routes>
                 <Route path="/" element={<RepositoryList />} />
                 <Route
-                    path="/Signin"
-                    element={<SignIn />}
+                    path="/repository/:repoId"
+                    element={<RepositoryView />}
                 />
+                <Route path="/Signin" element={<SignIn />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </View>

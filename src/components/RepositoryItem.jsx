@@ -1,6 +1,7 @@
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, Pressable } from 'react-native';
 import Text from './Text';
 import theme from '../theme';
+import * as Linking from 'expo-linking';
 
 const styles = StyleSheet.create({
     container: {
@@ -47,6 +48,15 @@ const styles = StyleSheet.create({
         padding: theme.paddings.smallBackgroundTextPadding,
         borderRadius: 5,
         marginTop: theme.margins.normal,
+    },
+    linkElement: {
+        backgroundColor: theme.colors.blueBackground,
+        flexGrow: 0,
+        padding: theme.paddings.smallBackgroundTextPadding,
+        borderRadius: 5,
+        marginTop: theme.margins.normal,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 
@@ -98,22 +108,22 @@ const Footer = ({ item }) => {
     return (
         <View style={styles.footer}>
             <FooterElement
-                testID='stargazersCount'
+                testID="stargazersCount"
                 value={item.stargazersCount}
                 text="Stars"
             />
             <FooterElement
-                testID='forksCount'
+                testID="forksCount"
                 value={item.forksCount}
                 text="Forks"
             />
             <FooterElement
-                testID='reviewCount'
+                testID="reviewCount"
                 value={item.reviewCount}
                 text="Reviews"
             />
             <FooterElement
-                testID='ratingAverage'
+                testID="ratingAverage"
                 value={item.ratingAverage}
                 text="Rating"
             />
@@ -121,11 +131,22 @@ const Footer = ({ item }) => {
     );
 };
 
-const RepositoryItem = ({ item }) => {
+const LinkElement = ({ url }) => {
+    return (
+        <Pressable onPress={() => Linking.openURL(url)}>
+            <Text style={styles.linkElement} color="darkBackgroundText">
+                Open on Github
+            </Text>
+        </Pressable>
+    );
+};
+
+const RepositoryItem = ({ item, showUrl, url }) => {
     return (
         <View testID="repositoryItem" style={styles.container}>
             <Header item={item} />
             <Footer item={item} />
+            {showUrl && <LinkElement url={url} />}
         </View>
     );
 };

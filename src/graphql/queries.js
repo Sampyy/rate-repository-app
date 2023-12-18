@@ -14,6 +14,16 @@ export const GET_REPOSITORIES = gql`
     }
 `;
 
+export const GET_REPOSITORY = gql`
+    ${CORE_REPOSITORY_ITEM}
+    query Repository($repositoryId: ID!) {
+        repository(id: $repositoryId) {
+            ...CoreRepositoryItem
+            url
+        }
+      }
+`;
+
 export const ME = gql`
     query {
         me {
@@ -21,4 +31,4 @@ export const ME = gql`
             username
         }
     }
-`
+`;
