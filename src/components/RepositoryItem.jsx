@@ -8,8 +8,8 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: theme.colors.darkBackgroundText,
         justifyContent: 'center',
-        maxWidth: 700,
-        margin: theme.margins.normal
+        maxWidth: 'auto',
+        margin: theme.margins.normal,
     },
     logo: {
         height: 50,
@@ -21,10 +21,9 @@ const styles = StyleSheet.create({
         flexGrow: 0,
         flexDirection: 'row',
         flexBasis: 'content',
-        maxWidth: 300,
     },
     infoBox: {
-        display: 'inline-flex',
+        display: 'flex',
         flexWrap: 'wrap',
         alignItems: 'flex-start',
     },
@@ -37,6 +36,10 @@ const styles = StyleSheet.create({
     footerElement: {
         display: 'flex',
         alignItems: 'center',
+    },
+    description: {
+        alignSelf: 'flex-start',
+        marginRight: 30
     },
     language: {
         backgroundColor: theme.colors.blueBackground,
@@ -53,7 +56,9 @@ const HeaderInfoBox = ({ item }) => {
             <Text fontSize="subheading" fontWeight="bold">
                 {item.fullName}
             </Text>
-            <Text color="secondaryText">{item.description}</Text>
+            <Text color="secondaryText" style={styles.description}>
+                {item.description}
+            </Text>
             <Text style={styles.language} color="darkBackgroundText">
                 {item.language}
             </Text>
