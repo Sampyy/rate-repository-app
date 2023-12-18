@@ -3,6 +3,8 @@ import Constants from 'expo-constants';
 import theme from '../theme';
 import Text from './Text';
 import { Link } from 'react-router-native';
+import useMe from '../hooks/useMe';
+import useSignOut from '../hooks/useSignOut';
 
 const styles = StyleSheet.create({
     container: {
@@ -31,6 +33,20 @@ const TabText = ({ text }) => {
 };
 
 const AppBar = () => {
+    const { me, loading } = useMe();
+    const [signOut] = useSignOut();
+    const onPressSignout = async () => {
+        try {
+            const data = await signOut();
+            console.log('signout data: ', data);
+        } catch (e) {
+            'error on signout: ', e;
+        }
+    };
+    if (loading) {
+        return <Text>loading</Text>;
+    }
+
     return (
         <View style={styles.container}>
             <ScrollView horizontal>
@@ -39,9 +55,16 @@ const AppBar = () => {
                         <TabText text="Repositories" />
                     </Link>
                 </Pressable>
-                <Link to="/Signin">
-                    <TabText text="Sign in" />
-                </Link>
+                {me == null && (
+                    <Link to="/Signin">
+                        <TabText text="Sign in" />
+                    </Link>
+                )}
+                {me !== null && (
+                    <Pressable onPress={onPressSignout}>
+                        <TabText text="Sign out" />
+                    </Pressable>
+                )}
             </ScrollView>
         </View>
     );

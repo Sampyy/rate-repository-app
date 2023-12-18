@@ -7,7 +7,6 @@ import theme from '../theme';
 import * as yup from 'yup';
 
 import useSignIn from '../hooks/useSignIn';
-import { useEffect } from 'react';
 
 const initialValues = {
     username: '',
