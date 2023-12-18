@@ -12,13 +12,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const RepositoryList = () => {
-    const { repositories, loading } = useRepositories();
-
-    // Get the nodes from the edges array
-    if (loading) {
-        return <Text>Repositories loading</Text>;
-    }
+const RepositoryListContainer = ({ repositories }) => {
     const repositoryNodes = repositories
         ? repositories.edges.map((edge) => edge.node)
         : [];
@@ -34,6 +28,17 @@ const RepositoryList = () => {
             // other props
         />
     );
+}
+
+const RepositoryList = () => {
+    const { repositories, loading } = useRepositories();
+
+    // Get the nodes from the edges array
+    if (loading) {
+        return <Text>Repositories loading</Text>;
+    }
+    
+    return <RepositoryListContainer repositories={repositories} />
 };
 
 export default RepositoryList;
