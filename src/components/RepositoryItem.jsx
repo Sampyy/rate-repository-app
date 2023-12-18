@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     },
     description: {
         alignSelf: 'flex-start',
-        marginRight: 30
+        marginRight: 30,
     },
     language: {
         backgroundColor: theme.colors.blueBackground,
@@ -53,13 +53,21 @@ const styles = StyleSheet.create({
 const HeaderInfoBox = ({ item }) => {
     return (
         <View style={styles.infoBox}>
-            <Text fontSize="subheading" fontWeight="bold">
+            <Text testID="fullName" fontSize="subheading" fontWeight="bold">
                 {item.fullName}
             </Text>
-            <Text color="secondaryText" style={styles.description}>
+            <Text
+                testID="description"
+                color="secondaryText"
+                style={styles.description}
+            >
                 {item.description}
             </Text>
-            <Text style={styles.language} color="darkBackgroundText">
+            <Text
+                testID="language"
+                style={styles.language}
+                color="darkBackgroundText"
+            >
                 {item.language}
             </Text>
         </View>
@@ -75,10 +83,10 @@ const Header = ({ item }) => {
     );
 };
 
-const FooterElement = ({ value, text }) => {
+const FooterElement = ({ value, text, testID }) => {
     return (
         <View style={styles.footerElement}>
-            <Text fontWeight="bold" fontSize="subheading">
+            <Text testID={testID} fontWeight="bold" fontSize="subheading">
                 {value >= 1000 ? Math.round(value / 100) / 10 + 'k' : value}
             </Text>
             <Text>{text}</Text>
@@ -89,17 +97,33 @@ const FooterElement = ({ value, text }) => {
 const Footer = ({ item }) => {
     return (
         <View style={styles.footer}>
-            <FooterElement value={item.stargazersCount} text="Stars" />
-            <FooterElement value={item.forksCount} text="Forks" />
-            <FooterElement value={item.reviewCount} text="Reviews" />
-            <FooterElement value={item.ratingAverage} text="Rating" />
+            <FooterElement
+                testID='stargazersCount'
+                value={item.stargazersCount}
+                text="Stars"
+            />
+            <FooterElement
+                testID='forksCount'
+                value={item.forksCount}
+                text="Forks"
+            />
+            <FooterElement
+                testID='reviewCount'
+                value={item.reviewCount}
+                text="Reviews"
+            />
+            <FooterElement
+                testID='ratingAverage'
+                value={item.ratingAverage}
+                text="Rating"
+            />
         </View>
     );
 };
 
 const RepositoryItem = ({ item }) => {
     return (
-        <View style={styles.container}>
+        <View testID="repositoryItem" style={styles.container}>
             <Header item={item} />
             <Footer item={item} />
         </View>
