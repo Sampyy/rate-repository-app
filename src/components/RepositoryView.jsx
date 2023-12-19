@@ -2,7 +2,7 @@ import Text from './Text';
 import { useParams } from 'react-router-native';
 import { View, StyleSheet, FlatList } from 'react-native';
 import theme from '../theme';
-import { format, parse } from 'date-fns';
+import { format } from 'date-fns';
 
 import RepositoryItem from './RepositoryItem';
 import useRepository from '../hooks/useRepository';

@@ -2,7 +2,7 @@ import { View, StyleSheet, Pressable, ScrollView } from 'react-native';
 import Constants from 'expo-constants';
 import theme from '../theme';
 import Text from './Text';
-import { Link } from 'react-router-native';
+import { Link, useNavigate } from 'react-router-native';
 import useMe from '../hooks/useMe';
 import useSignOut from '../hooks/useSignOut';
 
@@ -35,6 +35,7 @@ const TabText = ({ text }) => {
 const AppBar = () => {
     const { me, loading } = useMe();
     const [signOut] = useSignOut();
+    const navigate = useNavigate();
     const onPressSignout = async () => {
         try {
             const data = await signOut();
@@ -42,6 +43,10 @@ const AppBar = () => {
         } catch (e) {
             'error on signout: ', e;
         }
+    };
+
+    const onPressCreateReview = () => {
+        navigate('/review/new');
     };
     if (loading) {
         return <Text>loading</Text>;
@@ -63,6 +68,11 @@ const AppBar = () => {
                 {me !== null && (
                     <Pressable onPress={onPressSignout}>
                         <TabText text="Sign out" />
+                    </Pressable>
+                )}
+                {me !== null && (
+                    <Pressable onPress={onPressCreateReview}>
+                        <TabText text="Create Review" />
                     </Pressable>
                 )}
             </ScrollView>

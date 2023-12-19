@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_REPOSITORY } from '../graphql/queries';
 
-const useRepository = ( repoId ) => {
+const useRepository = (repoId) => {
     const [repo, setRepo] = useState();
     const { data, loading } = useQuery(GET_REPOSITORY, {
+        fetchPolicy: 'cache-and-network',
         variables: {
             repositoryId: repoId,
         },
@@ -13,7 +14,7 @@ const useRepository = ( repoId ) => {
     useEffect(() => {
         if (data) {
             console.log(data.repository);
-            setRepo(data.repository)
+            setRepo(data.repository);
         }
     }, [data]);
 

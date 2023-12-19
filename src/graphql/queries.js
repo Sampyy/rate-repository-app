@@ -25,8 +25,8 @@ export const GET_REPOSITORY = gql`
 `;
 
 export const GET_REVIEWS = gql`
-    {
-        repository(id: "jaredpalmer.formik") {
+    query Reviews($repositoryId: ID!) {
+        repository(id: $repositoryId) {
             id
             fullName
             reviews {

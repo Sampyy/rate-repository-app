@@ -4,11 +4,14 @@ import { useState, useEffect } from 'react';
 
 const useReviews = (repoId) => {
     const [reviews, setReviews] = useState();
-    const { data, loading } = useQuery(GET_REVIEWS);
+    const { data, loading } = useQuery(GET_REVIEWS, {
+        fetchPolicy: 'cache-and-network',
+        variables: { repositoryId: repoId },
+    });
 
     useEffect(() => {
         if (data) {
-            console.log(data.repository.reviews.edges);
+            //console.log(data.repository.reviews.edges);
             setReviews(data.repository.reviews.edges);
         }
     }, [data]);
