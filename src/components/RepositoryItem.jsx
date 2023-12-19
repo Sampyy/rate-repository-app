@@ -24,8 +24,7 @@ const styles = StyleSheet.create({
         flexBasis: 'content',
     },
     infoBox: {
-        display: 'flex',
-        flexWrap: 'wrap',
+        flex: 1,
         alignItems: 'flex-start',
     },
     footer: {
@@ -41,6 +40,7 @@ const styles = StyleSheet.create({
     description: {
         alignSelf: 'flex-start',
         marginRight: 30,
+        flex: 1,
     },
     language: {
         backgroundColor: theme.colors.blueBackground,

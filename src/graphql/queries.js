@@ -21,7 +21,30 @@ export const GET_REPOSITORY = gql`
             ...CoreRepositoryItem
             url
         }
-      }
+    }
+`;
+
+export const GET_REVIEWS = gql`
+    {
+        repository(id: "jaredpalmer.formik") {
+            id
+            fullName
+            reviews {
+                edges {
+                    node {
+                        id
+                        text
+                        rating
+                        createdAt
+                        user {
+                            id
+                            username
+                        }
+                    }
+                }
+            }
+        }
+    }
 `;
 
 export const ME = gql`
