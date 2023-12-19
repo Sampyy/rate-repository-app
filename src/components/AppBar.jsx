@@ -26,7 +26,7 @@ const onPressHeading = () => {
 
 const TabText = ({ text }) => {
     return (
-        <Text style={styles.text} color="darkBackgroundText" fontSize="heading">
+        <Text style={styles.text} color="darkBackgroundText" fontSize="heading" fontWeight='bold'>
             {text}
         </Text>
     );
@@ -66,13 +66,13 @@ const AppBar = () => {
                     </Link>
                 )}
                 {me !== null && (
-                    <Pressable onPress={onPressSignout}>
-                        <TabText text="Sign out" />
+                    <Pressable onPress={onPressCreateReview}>
+                        <TabText text="Create Review" />
                     </Pressable>
                 )}
                 {me !== null && (
-                    <Pressable onPress={onPressCreateReview}>
-                        <TabText text="Create Review" />
+                    <Pressable onPress={onPressSignout}>
+                        <TabText text="Sign out" />
                     </Pressable>
                 )}
             </ScrollView>

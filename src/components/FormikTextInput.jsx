@@ -11,12 +11,12 @@ const styles = StyleSheet.create({
     },
     textInput: {
         borderWidth: 1,
-        padding: 1,
-        paddingLeft: 5,
+        padding: 5,
         borderRadius: 4,
         borderColor: theme.colors.textPrimary,
         marginTop: 5,
         marginBottom: 5,
+
     },
     errorText: {
         color: theme.colors.error,
@@ -38,6 +38,7 @@ const FormikTextInput = ({ name, ...props }) => {
                 value={field.value}
                 error={showError}
                 style={[styles.textInput, showError && styles.error]}
+                placeholderTextColor='#C4C4C4'
                 {...props}
             />
             {showError && (

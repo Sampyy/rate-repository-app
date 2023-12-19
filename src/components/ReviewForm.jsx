@@ -5,11 +5,20 @@ import theme from '../theme';
 import FormikTextInput from './FormikTextInput';
 import { View, StyleSheet, Pressable } from 'react-native';
 import Text from './Text';
+import useCreateReview from '../hooks/useCreateReview';
+import { useNavigate } from 'react-router-native';
 
 const styles = StyleSheet.create({
     container: {
         margin: theme.margins.normal,
         display: 'flex',
+    },
+    button: {
+        alignItems: 'center',
+        backgroundColor: theme.colors.blueBackground,
+        padding: 7,
+        marginTop: 10,
+        borderRadius: 5,
     },
 });
 
@@ -36,9 +45,9 @@ const ReviewFormikForm = ({ onSubmit }) => {
                 placeholder="Repository Name"
             />
             <FormikTextInput name="rating" placeholder="Rating" />
-            <FormikTextInput name="review" placeholder="Review" />
-            <Pressable onPress={onSubmit}>
-                <Text>Post review</Text>
+            <FormikTextInput name="review" placeholder="Review" multiline />
+            <Pressable style={styles.button} onPress={onSubmit}>
+                <Text color='darkBackgroundText' fontSize='subheading' fontWeight='bold'>Post review</Text>
             </Pressable>
         </View>
     );
@@ -48,13 +57,11 @@ const ReviewContainer = ({ onSubmit }) => {
     const initialValues = {
         repositoryName: '',
         repositoryOwner: '',
-        rating: 50,
+        rating: '',
         review: '',
     };
     return (
         <View>
-            <Text>Create review</Text>
-
             <Formik
                 initialValues={initialValues}
                 onSubmit={onSubmit}
@@ -69,6 +76,8 @@ const ReviewContainer = ({ onSubmit }) => {
 };
 
 const ReviewForm = () => {
+    const [createReview] = useCreateReview();
+    const navigate = useNavigate();
     const onSubmit = async ({
         repositoryName,
         repositoryOwner,
@@ -76,6 +85,18 @@ const ReviewForm = () => {
         review,
     }) => {
         console.log('Form: ', repositoryName, repositoryOwner, rating, review);
+        try {
+            const data = await createReview(
+                repositoryOwner,
+                repositoryName,
+                rating,
+                review
+            );
+            //console.log('reviewdata: ', data);
+            navigate(`/repository/${data.createReview.repositoryId}`);
+        } catch (e) {
+            console.log(e);
+        }
     };
     return <ReviewContainer onSubmit={onSubmit} />;
 };
