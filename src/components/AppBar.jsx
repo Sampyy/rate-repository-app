@@ -35,7 +35,6 @@ const TabText = ({ text }) => {
 const AppBar = () => {
     const { me, loading } = useMe();
     const [signOut] = useSignOut();
-    const navigate = useNavigate();
     const onPressSignout = async () => {
         try {
             const data = await signOut();
@@ -45,9 +44,7 @@ const AppBar = () => {
         }
     };
 
-    const onPressCreateReview = () => {
-        navigate('/review/new');
-    };
+    
     if (loading) {
         return <Text>loading</Text>;
     }
@@ -65,16 +62,22 @@ const AppBar = () => {
                         <TabText text="Sign in" />
                     </Link>
                 )}
+                {me == null && (
+                    <Link to='/Signup'>
+                        <TabText text="Sign up"/>
+                    </Link>
+                )}
                 {me !== null && (
-                    <Pressable onPress={onPressCreateReview}>
+                    <Link to='/review/new'>
                         <TabText text="Create Review" />
-                    </Pressable>
+                    </Link>
                 )}
                 {me !== null && (
                     <Pressable onPress={onPressSignout}>
                         <TabText text="Sign out" />
                     </Pressable>
                 )}
+                
             </ScrollView>
         </View>
     );

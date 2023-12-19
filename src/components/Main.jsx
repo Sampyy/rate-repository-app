@@ -7,6 +7,7 @@ import RepositoryList from './RepositoryList';
 import SignIn from './SignIn';
 import RepositoryView from './RepositoryView';
 import ReviewForm from './ReviewForm';
+import SignUp from './SignUp';
 
 const styles = StyleSheet.create({
     container: {
@@ -28,6 +29,7 @@ const Main = () => {
                 />
                 <Route path="/review/new" element={<ReviewForm />} />
                 <Route path="/Signin" element={<SignIn />} />
+                <Route path="/Signup" element={<SignUp />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </View>
