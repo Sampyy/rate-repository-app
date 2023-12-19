@@ -5,25 +5,22 @@ import { GET_REPOSITORY } from '../graphql/queries';
 import { View } from 'react-native';
 import RepositoryItem from './RepositoryItem';
 import * as Linking from 'expo-linking';
+import useRepository from '../hooks/useRepository';
 
 const RepositoryView = () => {
     let { repoId } = useParams();
-    const { data, loading } = useQuery(GET_REPOSITORY, {
-        variables: {
-            repositoryId: repoId,
-        },
-    });
+    const { repo, loading } = useRepository(repoId);
     if (loading) {
         return <Text>Loading..</Text>;
     }
 
     return (
         <View>
-            {data.repository && (
+            {repo && (
                 <RepositoryItem
-                    item={data.repository}
+                    item={repo}
                     showUrl={true}
-                    url={data.repository.url}
+                    url={repo.url}
                 />
             )}
         </View>

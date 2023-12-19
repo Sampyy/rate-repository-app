@@ -13,13 +13,13 @@ const styles = StyleSheet.create({
     },
 });
 
-export const RepositoryListContainer = ({ repositories }) => {
+export const RepositoryListContainer = ({ repositories, navigate }) => {
     const repositoryNodes = repositories
         ? repositories.edges.map((edge) => edge.node)
         : [];
 
     const ItemSeparator = () => <View style={styles.separator} />;
-    const navigate = useNavigate();
+
     const navigateToRepo = (item) => {
         console.log('navigate repo: ', item);
         navigate(`/repository/${item.id}`);
@@ -42,13 +42,18 @@ export const RepositoryListContainer = ({ repositories }) => {
 
 const RepositoryList = () => {
     const { repositories, loading } = useRepositories();
-
+    const navigate = useNavigate();
     // Get the nodes from the edges array
     if (loading) {
         return <Text>Repositories loading</Text>;
     }
 
-    return <RepositoryListContainer repositories={repositories} />;
+    return (
+        <RepositoryListContainer
+            repositories={repositories}
+            navigate={navigate}
+        />
+    );
 };
 
 export default RepositoryList;

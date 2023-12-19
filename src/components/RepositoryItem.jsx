@@ -55,8 +55,7 @@ const styles = StyleSheet.create({
         padding: theme.paddings.smallBackgroundTextPadding,
         borderRadius: 5,
         marginTop: theme.margins.normal,
-        justifyContent: 'center',
-        alignItems: 'center',
+        textAlign: 'center',
     },
 });
 
