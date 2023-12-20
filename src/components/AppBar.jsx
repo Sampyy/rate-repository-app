@@ -26,7 +26,12 @@ const onPressHeading = () => {
 
 const TabText = ({ text }) => {
     return (
-        <Text style={styles.text} color="darkBackgroundText" fontSize="heading" fontWeight='bold'>
+        <Text
+            style={styles.text}
+            color="darkBackgroundText"
+            fontSize="heading"
+            fontWeight="bold"
+        >
             {text}
         </Text>
     );
@@ -44,7 +49,6 @@ const AppBar = () => {
         }
     };
 
-    
     if (loading) {
         return <Text>loading</Text>;
     }
@@ -63,13 +67,18 @@ const AppBar = () => {
                     </Link>
                 )}
                 {me == null && (
-                    <Link to='/Signup'>
-                        <TabText text="Sign up"/>
+                    <Link to="/Signup">
+                        <TabText text="Sign up" />
                     </Link>
                 )}
                 {me !== null && (
-                    <Link to='/review/new'>
+                    <Link to="/review/new">
                         <TabText text="Create Review" />
+                    </Link>
+                )}
+                {me !== null && (
+                    <Link to="/review/my">
+                        <TabText text="My Reviews" />
                     </Link>
                 )}
                 {me !== null && (
@@ -77,7 +86,6 @@ const AppBar = () => {
                         <TabText text="Sign out" />
                     </Pressable>
                 )}
-                
             </ScrollView>
         </View>
     );

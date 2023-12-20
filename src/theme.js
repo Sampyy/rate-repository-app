@@ -9,6 +9,7 @@ const theme = {
         darkBackgroundText: '#F8F7FB',
         blueBackground: '#0065E2',
         error: '#BE7081',
+        delete: '#D5394C',
     },
     fontSizes: {
         body: 14,

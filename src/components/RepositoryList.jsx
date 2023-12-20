@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#ECF0F1',
     },
     pickerContainer: {
-        alignItems: 'center',
         padding: 7,
         marginTop: 10,
         borderRadius: 5,
@@ -117,7 +116,7 @@ const RepositoryList = () => {
     const [debouncedSearch] = useDebounce(searchKeyword, 500);
     const { repositories, loading } = useRepositories(
         selectedOrdering,
-        searchKeyword
+        debouncedSearch
     );
     // Get the nodes from the edges array
 
