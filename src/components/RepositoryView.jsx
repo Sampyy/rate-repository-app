@@ -6,18 +6,21 @@ import theme from '../theme';
 import RepositoryItem from './RepositoryItem';
 import useRepository from '../hooks/useRepository';
 import useReviews from '../hooks/useReviews';
-import { ReviewItem } from './ReviewItem';
-
-
+import ReviewItem from './ReviewItem';
 
 const RepositoryView = () => {
     let { repoId } = useParams();
     const { repo, loading: repoLoading } = useRepository(repoId);
-    const { reviews, loading: reviewsLoading } = useReviews(repoId);
+    const { reviews, loading: reviewsLoading, fetchMore } = useReviews(repoId);
     const reviewNodes = reviews ? reviews.map((review) => review.node) : [];
     if (repoLoading) {
         return <Text>Loading..</Text>;
     }
+
+    const onEndReach = () => {
+        console.log('end reached reviews');
+        fetchMore();
+    };
 
     return (
         <View>
@@ -29,6 +32,8 @@ const RepositoryView = () => {
                     data={reviewNodes}
                     renderItem={({ item }) => <ReviewItem review={item} />}
                     keyExtractor={({ id }) => id}
+                    onEndReached={onEndReach}
+                    onEndReachedThreshold={0.5}
                 />
             )}
         </View>

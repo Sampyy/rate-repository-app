@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { GET_REPOSITORIES } from '../graphql/queries';
 
 const useRepositories = (order, searchKeyword) => {
-    const [repositories, setRepositories] = useState();
     const [orderBy, setOrderBy] = useState('');
     const [orderDirection, setOrderDirection] = useState('');
     useEffect(() => {
@@ -27,20 +26,43 @@ const useRepositories = (order, searchKeyword) => {
     }, [order]);
     //console.log('order by: ', orderBy, ' orderDir: ', orderDirection);
 
-    const { data, error, loading } = useQuery(GET_REPOSITORIES, {
-        fetchPolicy: 'cache-and-network',
-        variables: {
-            orderBy: orderBy,
-            orderDirection: orderDirection,
-            searchKeyword: searchKeyword,
-        },
-    });
+    const { data, error, loading, refetch, fetchMore, ...result } = useQuery(
+        GET_REPOSITORIES,
+        {
+            fetchPolicy: 'cache-and-network',
+            variables: {
+                orderBy: orderBy,
+                orderDirection: orderDirection,
+                searchKeyword: searchKeyword,
+            },
+        }
+    );
 
-    useEffect(() => {
-        !loading && setRepositories(data.repositories);
-    }, [loading]);
+    const handleFetchMore = () => {
+        //console.log('Fetch more: ', 1);
+        const canFetchMore =
+            !loading && data?.repositories.pageInfo.hasNextPage;
+        if (!canFetchMore) {
+            return;
+        }
+        //console.log('after: ', data.repositories.pageInfo.endCursor);
+        fetchMore({
+            variables: {
+                cursor: data.repositories.pageInfo.endCursor,
+                orderBy: orderBy,
+                orderDirection: orderDirection,
+                searchKeyword: searchKeyword,
+            },
+        });
+    };
 
-    return { repositories, loading };
+    return {
+        repositories: data?.repositories,
+        loading,
+        refetch,
+        fetchMore: handleFetchMore,
+        ...result,
+    };
 };
 
 export default useRepositories;

@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         borderColor: theme.colors.textPrimary,
         margin: 5,
-        backgroundColor: '#F8F7FB'
+        backgroundColor: '#F8F7FB',
     },
 });
 
@@ -67,6 +67,7 @@ export const RepositoryListContainer = ({
     navigate,
     selectedOrdering,
     setSelectedOrdering,
+    onEndReach,
 }) => {
     const repositoryNodes = repositories
         ? repositories.edges.map((edge) => edge.node)
@@ -75,37 +76,37 @@ export const RepositoryListContainer = ({
     const ItemSeparator = () => <View style={styles.separator} />;
 
     const navigateToRepo = (item) => {
-        console.log('navigate repo: ', item);
+        //console.log('navigate repo: ', item);
         navigate(`/repository/${item.id}`);
     };
     //console.log('rendering repositorylist', repositories)
     return (
-        <FlatList
-            data={repositoryNodes}
-            ItemSeparatorComponent={ItemSeparator}
-            renderItem={({ item }) => (
-                <Pressable onPress={() => navigateToRepo(item)}>
-                    <RepositoryItem item={item} />
-                </Pressable>
-            )}
-            style={styles.container}
-            ListHeaderComponent={
-                <RepositoryListOrderingMenu
-                    selectedOrdering={selectedOrdering}
-                    setSelectedOrdering={setSelectedOrdering}
-                />
-            }
-            // other props
-        />
+        <View>
+            <RepositoryListOrderingMenu
+                selectedOrdering={selectedOrdering}
+                setSelectedOrdering={setSelectedOrdering}
+            />
+            <FlatList
+                data={repositoryNodes}
+                ItemSeparatorComponent={ItemSeparator}
+                renderItem={({ item }) => (
+                    <Pressable onPress={() => navigateToRepo(item)}>
+                        <RepositoryItem item={item} />
+                    </Pressable>
+                )}
+                style={styles.container}
+                onEndReached={onEndReach}
+                onEndReachedThreshold={0.5}
+
+                // other props
+            />
+        </View>
     );
 };
 
 const SearchText = ({ setSearchKeyword }) => {
     return (
-        <TextInput
-            style={styles.textInput}
-            onChange={({ target }) => setSearchKeyword(target.value)}
-        />
+        <TextInput style={styles.textInput} onChangeText={setSearchKeyword} />
     );
 };
 
@@ -114,10 +115,15 @@ const RepositoryList = () => {
     const [selectedOrdering, setSelectedOrdering] = useState('latest');
     const [searchKeyword, setSearchKeyword] = useState('');
     const [debouncedSearch] = useDebounce(searchKeyword, 500);
-    const { repositories, loading } = useRepositories(
+    const { repositories, loading, fetchMore } = useRepositories(
         selectedOrdering,
         debouncedSearch
     );
+
+    const onEndReach = () => {
+        console.log('You reached the end');
+        fetchMore();
+    };
     // Get the nodes from the edges array
 
     return (
@@ -131,6 +137,7 @@ const RepositoryList = () => {
                     navigate={navigate}
                     selectedOrdering={selectedOrdering}
                     setSelectedOrdering={setSelectedOrdering}
+                    onEndReach={onEndReach}
                 />
             )}
         </View>

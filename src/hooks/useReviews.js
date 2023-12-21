@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 const useReviews = (repoId) => {
     const [reviews, setReviews] = useState();
-    const { data, loading } = useQuery(GET_REVIEWS, {
+    const { data, loading, fetchMore } = useQuery(GET_REVIEWS, {
         fetchPolicy: 'cache-and-network',
         variables: { repositoryId: repoId },
     });
@@ -16,7 +16,27 @@ const useReviews = (repoId) => {
         }
     }, [data]);
 
-    return { reviews, loading };
+    const handleFetchMore = () => {
+        //console.log('Fetch more reviews: ', 1);
+        const canFetchMore =
+            !loading && data?.repository.reviews.pageInfo.hasNextPage;
+        if (!canFetchMore) {
+            return;
+        }
+        //console.log('Fetch more reviews: ', 2);
+        fetchMore({
+            variables: {
+                cursor: data.repository.reviews.pageInfo.endCursor,
+                repositoryId: repoId,
+            },
+        });
+    };
+
+    return {
+        reviews,
+        loading,
+        fetchMore: handleFetchMore,
+    };
 };
 
 export default useReviews;
