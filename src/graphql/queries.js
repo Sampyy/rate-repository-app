@@ -45,7 +45,7 @@ export const GET_REVIEWS = gql`
         repository(id: $repositoryId) {
             id
             fullName
-            reviews(first: 2, after: $cursor) {
+            reviews(first: 3, after: $cursor) {
                 edges {
                     node {
                         ...ReviewItem

@@ -1,12 +1,18 @@
 import Text from './Text';
 import { useParams } from 'react-router-native';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 import theme from '../theme';
 
 import RepositoryItem from './RepositoryItem';
 import useRepository from '../hooks/useRepository';
 import useReviews from '../hooks/useReviews';
 import ReviewItem from './ReviewItem';
+
+const styles = StyleSheet.create({
+    flatListContainer: {
+        flex: 1,
+    },
+});
 
 const RepositoryView = () => {
     let { repoId } = useParams();
@@ -23,7 +29,7 @@ const RepositoryView = () => {
     };
 
     return (
-        <View>
+        <View style={styles.flatListContainer}>
             {repo && (
                 <RepositoryItem item={repo} showUrl={true} url={repo.url} />
             )}

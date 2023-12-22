@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     },
     container: {
         backgroundColor: '#ECF0F1',
+        flex: 1,
     },
     pickerContainer: {
         padding: 7,
@@ -30,6 +31,9 @@ const styles = StyleSheet.create({
         margin: 5,
         backgroundColor: '#F8F7FB',
     },
+    flatListContainer: {
+        flex: 1,
+    },
 });
 
 const RepositoryListOrderingMenu = ({
@@ -37,7 +41,7 @@ const RepositoryListOrderingMenu = ({
     setSelectedOrdering,
 }) => {
     return (
-        <View style={styles.pickerContainer}>
+        <View>
             <Picker
                 selectedValue={selectedOrdering}
                 onValueChange={(itemValue) => setSelectedOrdering(itemValue)}
@@ -81,25 +85,27 @@ export const RepositoryListContainer = ({
     };
     //console.log('rendering repositorylist', repositories)
     return (
-        <View>
+        <View style={styles.flatListContainer} >
             <RepositoryListOrderingMenu
                 selectedOrdering={selectedOrdering}
                 setSelectedOrdering={setSelectedOrdering}
             />
-            <FlatList
-                data={repositoryNodes}
-                ItemSeparatorComponent={ItemSeparator}
-                renderItem={({ item }) => (
-                    <Pressable onPress={() => navigateToRepo(item)}>
-                        <RepositoryItem item={item} />
-                    </Pressable>
-                )}
-                style={styles.container}
-                onEndReached={onEndReach}
-                onEndReachedThreshold={0.5}
+            <View style={styles.flatListContainer}>
+                <FlatList
+                    data={repositoryNodes}
+                    ItemSeparatorComponent={ItemSeparator}
+                    renderItem={({ item }) => (
+                        <Pressable onPress={() => navigateToRepo(item)}>
+                            <RepositoryItem item={item} />
+                        </Pressable>
+                    )}
+                    style={styles.container}
+                    onEndReached={onEndReach}
+                    onEndReachedThreshold={0.5}
 
-                // other props
-            />
+                    // other props
+                />
+            </View>
         </View>
     );
 };
