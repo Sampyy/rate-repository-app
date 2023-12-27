@@ -14,6 +14,32 @@ const styles = StyleSheet.create({
     },
 });
 
+export const RepositoryViewContainer = ({
+    repo,
+    reviewNodes,
+    onEndReach,
+    onEndReachedThreshold,
+    reviewsLoading,
+    reviews,
+}) => {
+    return (
+        <View style={styles.flatListContainer}>
+            {repo && (
+                <RepositoryItem item={repo} showUrl={true} url={repo.url} />
+            )}
+            {!reviewsLoading && reviews && (
+                <FlatList
+                    data={reviewNodes}
+                    renderItem={({ item }) => <ReviewItem review={item} />}
+                    keyExtractor={({ id }) => id}
+                    onEndReached={onEndReach}
+                    onEndReachedThreshold={onEndReachedThreshold}
+                />
+            )}
+        </View>
+    );
+};
+
 const RepositoryView = () => {
     let { repoId } = useParams();
     const { repo, loading: repoLoading } = useRepository(repoId);
@@ -29,20 +55,14 @@ const RepositoryView = () => {
     };
 
     return (
-        <View style={styles.flatListContainer}>
-            {repo && (
-                <RepositoryItem item={repo} showUrl={true} url={repo.url} />
-            )}
-            {!reviewsLoading && reviews && (
-                <FlatList
-                    data={reviewNodes}
-                    renderItem={({ item }) => <ReviewItem review={item} />}
-                    keyExtractor={({ id }) => id}
-                    onEndReached={onEndReach}
-                    onEndReachedThreshold={0.5}
-                />
-            )}
-        </View>
+        <RepositoryViewContainer
+            repo={repo}
+            reviewNodes={reviewNodes}
+            onEndReach={onEndReach}
+            onEndReachedThreshold={0.5}
+            reviewsLoading={reviewsLoading}
+            reviews={reviews}
+        />
     );
 };
 

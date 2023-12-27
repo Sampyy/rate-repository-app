@@ -53,7 +53,7 @@ const ReviewFormikForm = ({ onSubmit }) => {
     );
 };
 
-const ReviewContainer = ({ onSubmit }) => {
+export const ReviewContainer = ({ onSubmit }) => {
     const initialValues = {
         repositoryName: '',
         repositoryOwner: '',
